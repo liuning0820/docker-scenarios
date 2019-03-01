@@ -1,0 +1,30 @@
+weba:
+    build: ./web
+    expose:
+        - 90
+
+webb:
+    build: ./web
+    expose:
+        - 90
+
+webc:
+    build: ./web
+    expose:
+        - 90
+
+haproxy:
+    image: haproxy:latest
+    volumes:
+        - ./haproxy:/haproxy-override
+        - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+    links:
+        - weba
+        - webb
+        - webc
+    ports:
+        - "90:90"
+        - "70:70"
+    expose:
+        - "90"
+        - "70"
